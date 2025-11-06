@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Detection API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f6f7fb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 400px;
+      height: 120px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Language Detection API</h1>
+  <textarea id="textInput" placeholder="Enter text to detect language..."></textarea><br>
+  <button onclick="detectLanguage()">Detect Language</button>
+  <button onclick="getInstance()">Get Instance</button>
+
+  <div class="result" id="resultBox">Result will appear here</div>
+
+  <script>
+    async function detectLanguage() {
+      const text = document.getElementById('textInput').value;
+      if (!text.trim()) {
+        alert("Please enter some text!");
+        return;
+      }
+
+      const res = await fetch('/detect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      document.getElementById('resultBox').innerText =
+        data.language ? `Detected language: ${data.language}` : `Error: ${data.error}`;
+    }
+
+    async function getInstance() {
+      const res = await fetch('/instance');
+      const data = await res.json();
+      document.getElementById('resultBox').innerText =
+        data.instance ? `Instance: ${data.instance}` : `Error: ${data.error}`;
+    }
+  </script>
+</body>
+</html>
