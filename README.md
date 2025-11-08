@@ -12,9 +12,9 @@ A cloud-ready Flask web application for automatic language detection and text an
 
 ## 📂 Project Structure
 
-language_api.py
-templates/
-└── index.html
+The repository should contain:
+- language_api.py
+- templates/ --> index.html
 
 ## ⚙️ Setup
 
