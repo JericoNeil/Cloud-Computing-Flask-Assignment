@@ -3,84 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Detection API</title>
+  <title>Language Detection API Demo</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background-color: #f6f7fb;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding-top: 50px;
+      min-height: 100vh;
+    }
+    header {
+      margin-top: 60px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
     h1 {
-      color: #333;
+      font-size: 2.3rem;
+      color: #2249aa;
+      letter-spacing: 1px;
+      margin-bottom: 7px;
+      text-align: center;
+      width: 100%;
+    }
+    .subtitle {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      text-align: center;
+      max-width: 600px;
+    }
+    .main-box {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      padding: 30px 35px 20px 35px;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     textarea {
-      width: 400px;
-      height: 120px;
-      padding: 10px;
+      width: 380px;
+      height: 110px;
+      padding: 11px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #bbb;
       resize: none;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      background: #f8fafc;
     }
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
+      padding: 12px 26px;
+      background-color: #2249aa;
+      color: #fff;
       border: none;
-      border-radius: 6px;
+      border-radius: 7px;
+      font-size: 1.05rem;
+      font-weight: 500;
       cursor: pointer;
+      margin-bottom: 6px;
+      margin-left: 5px;
+      transition: background 0.2s;
     }
-    button:hover {
-      background-color: #0056b3;
+    button:hover, button:focus {
+      background-color: #1b387e;
     }
     .result {
-      margin-top: 20px;
-      padding: 10px;
-      background: white;
+      margin-top: 18px;
+      padding: 15px 8px;
+      background: #ebf1ff;
+      border-radius: 7px;
+      box-shadow: 0 2px 8px rgba(34,73,170,0.07);
+      width: 380px;
+      text-align: left;
+      font-size: 1.05rem;
+      white-space: pre-line;
+      color: #2249aa;
+      min-height: 35px;
+    }
+    .inst-box {
+      margin-bottom: 13px;
+      color: #444;
+      font-size: 0.97rem;
+      background: #f1f6fd;
       border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 400px;
+      padding: 9px 14px;
+      width: 380px;
+      box-sizing: border-box;
       text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>Language Detection API</h1>
-  <textarea id="textInput" placeholder="Enter text to detect language..."></textarea><br>
-  <button onclick="detectLanguage()">Detect Language</button>
-  <button onclick="getInstance()">Get Instance</button>
-
-  <div class="result" id="resultBox">Result will appear here</div>
-
+  <header>
+    <h1>Language Detection API</h1>
+    <div class="subtitle">
+      Test our cloud-based API for automatic detection of multiple languages in any text.<br>
+      See each detected language and proportionality, or get informative text statistics.
+    </div>
+  </header>
+  <div class="main-box">
+    <div class="inst-box">
+      Enter any sentence or paragraph, you can combine languages and you will get each detected language with its respective proportionality and confidence. You can also analyze statistics such as character count, word count, and detected languages.
+    </div>
+    <textarea id="textInput" placeholder="Paste or type your sentence here..."></textarea>
+    <button onclick="detectAllProbabilities()">Detect Languages</button>
+    <button onclick="getTextStats()">Show Text Statistics</button>
+    <button onclick="getInstance()">Show Instance Info</button>
+    <div class="result" id="resultBox">Result will appear here</div>
+  </div>
   <script>
-    async function detectLanguage() {
+    async function detectAllProbabilities() {
       const text = document.getElementById('textInput').value;
+      const resultBox = document.getElementById('resultBox');
+      resultBox.innerText = "";
       if (!text.trim()) {
-        alert("Please enter some text!");
+        resultBox.innerText = "⚠️ Please enter some text!";
         return;
       }
-
-      const res = await fetch('/detect', {
+      resultBox.innerText = "Analyzing... ⏳";
+      const res = await fetch('/detect-all-probabilities', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })
       });
       const data = await res.json();
-      document.getElementById('resultBox').innerText =
-        data.language ? `Detected language: ${data.language}` : `Error: ${data.error}`;
+      if (data.languages) {
+        let msg = "Detected languages:\n";
+        data.languages.forEach((lang, i) => {
+          msg += `  • ${lang.name} (${lang.code}): ${lang.probability}%\n`;
+        });
+        resultBox.innerText = msg;
+      } else {
+        resultBox.innerText = `❌ Error: ${data.error}`;
+      }
+    }
+
+    async function getTextStats() {
+      const text = document.getElementById('textInput').value;
+      const resultBox = document.getElementById('resultBox');
+      resultBox.innerText = "";
+      if (!text.trim()) {
+        resultBox.innerText = "⚠️ Please enter some text!";
+        return;
+      }
+      resultBox.innerText = "Analyzing text statistics... ⏳";
+      const res = await fetch('/text-stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      if (data.char_count !== undefined) {
+        let msg = `Text Statistics:\nCharacters: ${data.char_count}\nWords: ${data.word_count}\nDetected languages: ${data.num_languages}\n`;
+        if (data.language_breakdown) {
+          msg += "Language breakdown:\n";
+          data.language_breakdown.forEach(lang => {
+            msg += `  • ${lang.name} (${lang.code}): ${lang.probability}%\n`;
+          });
+        }
+        resultBox.innerText = msg;
+      } else {
+        resultBox.innerText = `❌ Error: ${data.error}`;
+      }
     }
 
     async function getInstance() {
+      const resultBox = document.getElementById('resultBox');
+      resultBox.innerText = "Fetching instance info... ⏳";
       const res = await fetch('/instance');
       const data = await res.json();
-      document.getElementById('resultBox').innerText =
-        data.instance ? `Instance: ${data.instance}` : `Error: ${data.error}`;
+      if (data.instance) {
+        resultBox.innerText = `Cloud Instance: ${data.instance}`;
+      } else {
+        resultBox.innerText = `❌ Error: ${data.error}`;
+      }
     }
   </script>
 </body>

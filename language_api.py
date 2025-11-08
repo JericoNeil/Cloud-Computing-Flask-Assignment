@@ -1,12 +1,12 @@
-# Import required libraries
+# Import required libraries for web server, language detection, and file system operations.
 from flask import Flask, request, jsonify, render_template
-from langdetect import detect
+from langdetect import detect, detect_langs
 import os
 
-# Initialize Flask app
+# Initialize the Flask web application instance.
 app = Flask(__name__)
 
-# Map language codes (from langdetect) to full language names
+# Dictionary mapping short language codes to full human-readable names.
 LANGUAGES = {
     "af": "Afrikaans", "ar": "Arabic", "bg": "Bulgarian", "bn": "Bengali",
     "ca": "Catalan", "cs": "Czech", "cy": "Welsh", "da": "Danish", "de": "German",
@@ -24,84 +24,76 @@ LANGUAGES = {
     "zh-cn": "Chinese (Simplified)", "zh-tw": "Chinese (Traditional)"
 }
 
-
-# Frontend endpoint – serves the HTML interface
+# The main endpoint serves the enhanced HTML frontend.
 @app.route('/')
 def index():
-    """
-    Renders the index.html page.
-    Flask automatically looks for this file inside the 'templates' folder.
-    """
     return render_template('index.html')
 
-
-# Endpoint to detect the language of a given text
-@app.route('/detect', methods=['POST'])
-def detect_language():
-    """
-    POST /detect
-    Expects JSON input with a 'text' field and returns the detected language.
-    
-    Example request: {"text": "Bonjour tout le monde"}
-    Example response: {"language": "French"}
-    """
+# First endpoint to detect all possible languages in text, showing probabilities for each.
+@app.route('/detect-all-probabilities', methods=['POST'])
+def detect_all_probabilities():
     data = request.get_json()
-    
-    # Validate request
     if not data or 'text' not in data:
         return jsonify({'error': 'Missing "text" field in JSON body'}), 400
-
     text = data['text']
-
     try:
-        # Detect language code (e.g., 'en', 'es', 'fr')
-        code = detect(text)
-        
-        # Map code to full language name
-        language = LANGUAGES.get(code, code)
-        
-        # Return result as JSON
-        return jsonify({'language': language})
+        langs = detect_langs(text)
+        results = []
+        for lang in langs:
+            results.append({
+                'code': lang.lang,
+                'name': LANGUAGES.get(lang.lang, lang.lang),
+                'probability': round(lang.prob * 100, 2)
+            })
+        return jsonify({'languages': results})
     except Exception as e:
-        # Handle errors gracefully
         return jsonify({'error': str(e)}), 500
 
-
-# Endpoint to return instance information for assessment
+# Second endpoint that returns cloud instance info or a mock value.
 @app.route('/instance', methods=['GET'])
 def get_instance():
-    """
-    GET /instance
-    Runs the following code:
-        dirs = os.listdir('/var/lib/cloud/instances/')
-        return dirs[0]
-
-    On local systems (e.g., macOS) where this path doesn’t exist,
-    returns a mock instance name for testing.
-    """
     try:
         path = '/var/lib/cloud/instances/'
-
-        # If the directory doesn't exist (e.g. when running locally)
         if not os.path.exists(path):
             return jsonify({'instance': 'mock-instance-id'})
-
-        # List all folders in the directory
         dirs = os.listdir(path)
-
-        # Handle empty directory case
         if not dirs:
             return jsonify({'error': 'No instances found'}), 404
-
-        # Return the first directory name
         return jsonify({'instance': dirs[0]})
-
     except Exception as e:
-        # Catch OS or permission-related errors
         return jsonify({'error': str(e)}), 500
 
+# Third endpoint that returns summary statistics about the submitted text.
+# Output is the character count, word count, and number of detected languages.
+@app.route('/text-stats', methods=['POST'])
+def text_stats():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'Missing "text" field in JSON body'}), 400
+    text = data['text']
+    char_count = len(text)
+    word_count = len(text.split())
+    # Detect all possible languages and count them for mixed inputs.
+    try:
+        langs = detect_langs(text)
+        num_languages = len(langs)
+        language_breakdown = [
+            {
+                "code": l.lang,
+                "name": LANGUAGES.get(l.lang, l.lang),
+                "probability": round(l.prob * 100, 2)
+            }
+            for l in langs
+        ]
+        return jsonify({
+            'char_count': char_count,
+            'word_count': word_count,
+            'num_languages': num_languages,
+            'language_breakdown': language_breakdown
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-# Entry point to run the Flask app
+# Starts the Flask server.
 if __name__ == '__main__':
-    # Run on all IPs (0.0.0.0) and port 5001
     app.run(host='0.0.0.0', port=5001)
