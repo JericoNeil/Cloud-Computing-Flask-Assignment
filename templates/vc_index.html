@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VC - Top 3 AI News</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #eef1f5; text-align: center; }
+    .main { margin-top: 44px; background: #fff; border-radius: 13px; box-shadow: 0 4px 14px #c9d1e3; display: inline-block; padding: 36px 40px; min-width: 380px; }
+    h1 { color: #1c368c; letter-spacing: 2px; }
+    .vc-brand { color: #f44a2f; font-size: 1.1em; font-weight: 600; margin-bottom: 12px;}
+    button { margin: 18px; padding: 11px 38px; font-size: 1.09rem; background: #275ccf; color: #fff; border: none; border-radius: 7px; cursor: pointer; font-weight: 600; box-shadow: 0 1px 4px #bbc5d7;}
+    button:hover { background: #153679; }
+    #results { margin-top: 32px; }
+    .news-card { background: #f0f4fd; margin: 18px auto; padding: 20px 18px; border-radius: 8px; max-width: 490px; box-shadow: 0 1px 8px #d0d4dd; text-align:left; }
+    .headline {color: #2344ae; font-size:1.15em; font-weight: bold;}
+    .source { color: #7c8793; font-size:0.97em;}
+    .loading { color: #aaa; font-style: italic; }
+    a { text-decoration: none; color: #1a3192; font-weight:600; }
+    a:hover {text-decoration: underline;}
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="vc-brand">Next Tier Ventures</div>
+    <h1>📰 AI Investment News Monitor</h1>
+    <p>
+      The three most relevant live news headlines about <span style="color:#f44a2f">Artificial Intelligence</span>.<br>
+      <b>Click below for real-time news tracking:</b>
+    </p>
+    <button onclick="fetchNews()">Get AI News Now</button>
+    <div id="results"></div>
+  </div>
+  <script>
+    function fetchNews() {
+      const box = document.getElementById('results');
+      box.innerHTML = "<span class='loading'>Fetching the latest headlines...</span>";
+      fetch('/top-ai-news')
+        .then(res => res.json())
+        .then(data => {
+          if (!Array.isArray(data) || data.length === 0) {
+            box.innerHTML = "<span class='loading'>No news found. Please try again soon.</span>";
+            return;
+          }
+          let html = "";
+          data.forEach(article => {
+            html += `<div class="news-card">
+              <span class="headline">${article.title}</span><br>
+              <a href="${article.url}" target="_blank">Read more</a>
+            </div>`;
+          });
+          box.innerHTML = html;
+        })
+        .catch(err => {
+          box.innerHTML = "<span class='loading'>Error loading news. (Check API & internet.)</span>";
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerPath - University Degree Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .result-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .result-detail {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .detail-item strong {
+            color: #495057;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-safety {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-match {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-reach {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-double {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .score-display .big-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #f5c6cb;
+            margin-top: 15px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #c3e6cb;
+            margin-top: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content {
+                padding: 20px;
+            }
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 CareerPath</h1>
+            <p>Find your perfect university degree match based on your Bachillerato grades</p>
+        </div>
+
+        <div class="content">
+            <!-- Score Calculator Section -->
+            <div class="section">
+                <h2>📊 Calculate Your Target Admission Score</h2>
+                <div class="form-group">
+                    <label for="bachillerato">Bachillerato Grade (0-10):</label>
+                    <input type="number" id="bachillerato" step="0.1" min="0" max="10" placeholder="e.g., 8.5">
+                </div>
+                <div class="form-group">
+                    <label>PAU Exam Grades (5 exams, 0-10 each):</label>
+                    <div class="grid">
+                        <input type="number" id="pau1" step="0.1" min="0" max="10" placeholder="Spanish">
+                        <input type="number" id="pau2" step="0.1" min="0" max="10" placeholder="Catalan">
+                        <input type="number" id="pau3" step="0.1" min="0" max="10" placeholder="History">
+                        <input type="number" id="pau4" step="0.1" min="0" max="10" placeholder="Foreign Language">
+                        <input type="number" id="pau5" step="0.1" min="0" max="10" placeholder="Elective">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Specific Subject Grades (at least 2, 0-10 each):</label>
+                    <div class="grid">
+                        <input type="number" id="spec1" step="0.1" min="0" max="10" placeholder="Subject 1">
+                        <input type="number" id="spec2" step="0.1" min="0" max="10" placeholder="Subject 2">
+                        <input type="number" id="spec3" step="0.1" min="0" max="10" placeholder="Subject 3 (optional)">
+                        <input type="number" id="spec4" step="0.1" min="0" max="10" placeholder="Subject 4 (optional)">
+                    </div>
+                </div>
+                <button class="button" onclick="calculateScore()">Calculate My Score</button>
+                <div id="scoreResult"></div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <div class="section">
+                <h2>🎯 Get Degree Recommendations</h2>
+
+                <div class="form-group">
+                    <label for="totalScore">Your Total Target Score (0-14):</label>
+                    <input type="number" id="totalScore" step="0.01" min="0" max="14" placeholder="e.g., 11.85">
+                </div>
+
+                <div class="form-group">
+                    <label for="filterType">Which filter do you want to use?</label>
+                    <select id="filterType" onchange="updateFilterInputs()">
+                        <option value="both">Specialization and Field of Interest</option>
+                        <option value="specialization">Specialization Only</option>
+                        <option value="fieldInterest">Field of Interest Only</option>
+                        <option value="none">No Filters (show all possible)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="specializationGroup">
+                    <label for="specialization">Your Bachillerato Specialization:</label>
+                    <select id="specialization">
+                        <option value="">Any</option>
+                        <option value="Science and Technology">Science and Technology</option>
+                        <option value="Social Sciences">Social Sciences</option>
+                        <option value="Arts and Humanities">Arts and Humanities</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="fieldInterestGroup">
+                    <label for="fieldInterest">Field of Interest:</label>
+                    <select id="fieldInterest">
+                        <option value="">Any</option>
+                        <option value="Health Sciences">Health Sciences</option>
+                        <option value="Engineering and Architecture">Engineering and Architecture</option>
+                        <option value="Social Sciences and Law">Social Sciences and Law</option>
+                        <option value="Sciences">Sciences</option>
+                        <option value="Arts and Humanities">Arts and Humanities</option>
+                        <option value="Double Degree">Double Degree Only</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Preferred Province:</label>
+                    <select id="location">
+                        <option value="Any">Any</option>
+                        <option value="Barcelona​">Barcelona</option>
+                        <option value="Girona​">Girona</option>
+                        <option value="Lleida​">Lleida</option>
+                        <option value="Tarragona​">Tarragona</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeDouble" checked>
+                        <label for="includeDouble" style="margin-bottom: 0;">Include Double Degrees</label>
+                    </div>
+                </div>
+                <button class="button" onclick="getRecommendations()">Find My Matches</button>
+                <div id="recommendationsResult"></div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="section">
+                <h2>📈 Admission Statistics Overview</h2>
+                <button class="button button-secondary" onclick="getStatistics()">View Statistics</button>
+                <div id="statisticsResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5002/api/v1';
+
+        function updateFilterInputs() {
+            const filterType = document.getElementById('filterType').value;
+            document.getElementById('specializationGroup').style.display =
+                (filterType === 'both' || filterType === 'specialization') ? '' : 'none';
+            document.getElementById('fieldInterestGroup').style.display =
+                (filterType === 'both' || filterType === 'fieldInterest') ? '' : 'none';
+        }
+        document.addEventListener('DOMContentLoaded', updateFilterInputs);
+
+        async function calculateScore() {
+            const bachillerato = parseFloat(document.getElementById('bachillerato').value);
+            const pau1 = parseFloat(document.getElementById('pau1').value);
+            const pau2 = parseFloat(document.getElementById('pau2').value);
+            const pau3 = parseFloat(document.getElementById('pau3').value);
+            const pau4 = parseFloat(document.getElementById('pau4').value);
+            const pau5 = parseFloat(document.getElementById('pau5').value);
+            const spec1 = parseFloat(document.getElementById('spec1').value);
+            const spec2 = parseFloat(document.getElementById('spec2').value);
+            const spec3 = parseFloat(document.getElementById('spec3').value) || 0;
+            const spec4 = parseFloat(document.getElementById('spec4').value) || 0;
+
+            const resultDiv = document.getElementById('scoreResult');
+
+            if (isNaN(bachillerato) || isNaN(pau1) || isNaN(pau2) || isNaN(pau3) || 
+                isNaN(pau4) || isNaN(pau5) || isNaN(spec1) || isNaN(spec2)) {
+                resultDiv.innerHTML = '<div class="error">Please fill in all required fields!</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading">Calculating...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/students/calculate-score`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        bachillerato_grade: bachillerato,
+                        pau_exams: [pau1, pau2, pau3, pau4, pau5],
+                        specific_subjects: [spec1, spec2, spec3, spec4].filter(x => x > 0)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('totalScore').value = data.total_score;
+                    resultDiv.innerHTML = `
+                        <div class="score-display">
+                            <div>Your Target Admission Score</div>
+                            <div class="big-number">${data.total_score} / 14</div>
+                            <div>
+                                Bachillerato: ${data.breakdown.bachillerato_component} | 
+                                PAU: ${data.breakdown.pau_component} | 
+                                Specific: ${data.breakdown.specific_subjects_component}
+                            </div>
+                        </div>
+                        <div class="success">
+                            Score calculated successfully! Use it in the recommendations section below.
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function getRecommendations() {
+            const totalScore = parseFloat(document.getElementById('totalScore').value);
+            const filterType = document.getElementById('filterType').value;
+            let specialization = null;
+            let fieldInterest = null;
+            if (filterType === 'both' || filterType === 'specialization') {
+                specialization = document.getElementById('specialization').value || null;
+            }
+            if (filterType === 'both' || filterType === 'fieldInterest') {
+                fieldInterest = document.getElementById('fieldInterest').value || null;
+            }
+            const location = document.getElementById('location').value;
+            const includeDouble = document.getElementById('includeDouble').checked;
+
+            const resultDiv = document.getElementById('recommendationsResult');
+
+            if (isNaN(totalScore)) {
+                resultDiv.innerHTML = '<div class="error">Please enter your total score first!</div>';
+                return;
+            }
+            resultDiv.innerHTML = '<div class="loading">Finding your matches...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/students/recommendations`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        total_score: totalScore,
+                        specialization: specialization,
+                        field_interest: fieldInterest,
+                        location: location !== 'Any' ? location : null,
+                        include_double_degrees: includeDouble
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.top_recommendations.length === 0) {
+                        resultDiv.innerHTML = '<div class="error">No matches found with your criteria. Try adjusting your filters!</div>';
+                        return;
+                    }
+                    let html = `
+                        <div class="results">
+                            <h3>Found ${data.total_matches} matching programs. Here are your top 20:</h3>
+                            <br>
+                    `;
+                    data.top_recommendations.forEach((degree, index) => {
+                        const categoryClass = degree.category.toLowerCase();
+                        const doubleBadge = degree.is_double_degree ? '<span class="badge badge-double">Double Degree</span>' : '';
+                        html += `
+                            <div class="result-card">
+                                <h3>
+                                    ${index + 1}. ${degree.name}
+                                    <span class="badge badge-${categoryClass}">${degree.category}</span>
+                                    ${doubleBadge}
+                                </h3>
+                                <div class="result-detail">
+                                    <div class="detail-item"><strong>University:</strong> ${degree.university}</div>
+                                    <div class="detail-item"><strong>Location:</strong> ${degree.location}</div>
+                                    <div class="detail-item"><strong>Field:</strong> ${degree.field}</div>
+                                    <div class="detail-item"><strong>Cut-off Score:</strong> ${degree.cut_off_score}</div>
+                                    <div class="detail-item"><strong>Specialization:</strong> ${degree.specialization}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function getStatistics() {
+            const resultDiv = document.getElementById('statisticsResult');
+            resultDiv.innerHTML = '<div class="loading">Loading statistics...</div>';
+            try {
+                const response = await fetch(`${API_BASE_URL}/statistics/overview`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    let html = `
+                        <div class="results">
+                            <h3>Catalonia University Admission Overview</h3>
+                            <div class="grid">
+                                <div class="stat-card">
+                                    <div class="number">${data.total_programs}</div>
+                                    <div class="label">Total Programs</div>
+                                </div>
+                            </div>
+                            <h4 style="margin-top: 30px; color: #667eea;">Score Distribution</h4>
+                            <div class="grid">
+                                ${Object.entries(data.score_distribution).map(([range, count]) => `
+                                    <div class="stat-card">
+                                        <div class="number">${count}</div>
+                                        <div class="label">${range}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <h4 style="margin-top: 30px; color: #667eea;">Programs by Field</h4>
+                            <div class="grid">
+                                ${Object.entries(data.programs_by_field).map(([field, count]) => `
+                                    <div class="stat-card">
+                                        <div class="number">${count}</div>
+                                        <div class="label">${field}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <h4 style="margin-top: 30px; color: #667eea;">Average Cut-off Scores by Field</h4>
+                            <div class="grid">
+                                ${Object.entries(data.average_scores_by_field).map(([field, avg]) => `
+                                    <div class="stat-card">
+                                        <div class="number">${avg}</div>
+                                        <div class="label">${field}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${error.message}. Make sure the API server is running!</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
