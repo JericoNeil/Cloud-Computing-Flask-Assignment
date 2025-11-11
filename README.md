@@ -1,5 +1,5 @@
 # Cloud-Computing-Flask-Assignment
-# 🌐 Exercise 1: Language Detection API
+# 🌐 Exercise/Assignment 1: Language Detection API
 
 Exercise 1 consists of developing a Flask web application for automatic language detection and text analytics.
 
@@ -104,10 +104,10 @@ Language breakdown:
 - English (en): 55.0%
 - Spanish (es): 45.0%
 
-# 🌐 Exercise 2: Making the API available in AWS
+# 🌐 Exercise/Assignment 2: Making the API available in AWS
 Information about this exercise is explained in the PDF document
 
-# 🎓 Exercise 3: Bachillerato University Degree Recommendation System
+# 🎓 Exercise/Assignment 3: Bachillerato University Degree Recommendation System
 
 The motivation behind this project is to help my brother choose which university degree to pursue. He's currently in his first year of high school but he has no idea about what he wants to study like a great majority of students. Notwithstanding the importance of choosing a degree, there's no existing platform that tells you what career paths you could pursue based on your high school + PAU predicted grades. 
 
@@ -344,4 +344,3 @@ With all columns complete and clean, I then exported the Excel table into a JSON
 *Jerico Agdan*  
 Cloud Computing Assignment 2
 2025-2026
-   
