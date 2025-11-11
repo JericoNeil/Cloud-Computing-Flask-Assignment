@@ -345,7 +345,7 @@ def get_statistics():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# To run the app
+# To run the application
 
 if __name__ == '__main__':
     print("=" * 60)
