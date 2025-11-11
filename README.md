@@ -109,23 +109,23 @@ Information about this exercise is explained in the PDF document
 
 # 🎓 Exercise 3: Bachillerato University Degree Recommendation System
 
-The motivation behind this project is to help my brother choose which university degree to pursue. He's currently in his first year of high school but he has no idea about what he wants to study like a great majority of students, however, there's no existing platform that tells you what career paths you could pursue based on your predicted grades. 
+The motivation behind this project is to help my brother choose which university degree to pursue. He's currently in his first year of high school but he has no idea about what he wants to study like a great majority of students. Notwithstanding the importance of choosing a degree, there's no existing platform that tells you what career paths you could pursue based on your high school + PAU predicted grades. 
 
-In Catalonia, you can find this website from the Government of Catalonia, but the information of studies is formatted on a PDF, which is not very convenient: https://universitats.gencat.cat/ca/preinscripcions/notes-tall/
+In Catalonia, you can find this website from the Government of Catalonia about the cut-off grades of Catalonian bachelor's, but the information of studies is in PDF, which is not very convenient to filter degrees: https://universitats.gencat.cat/ca/preinscripcions/notes-tall/
 
-This first version of the project aims to provide a better user experience to high school students, empowering students like my brother to make informed, personalized decisions about their academic futures.
+This first version of the project aims to provide a better user experience to high school students, empowering students like my brother to make informed and personalized decisions about their academic futures.
 
 ## 🚀 Features
-- University Admission Calculator (out of 14): It converts Bachillerato and PAU grades into your official university admission score (out of 14).
-- Personalized recommendations: It suggests the top 20 degrees within reach based on your predicted admission score, where you can filter by high school specialization (Sciences and Technology, Arts and Humanities, Social Sciences) and/or study field (e.g., Engineering and Architecture, Social Sciences and Law, Sciences, Arts and Humanities, etc.), geographic preference (e.g., Girona, Barcelona, Lleida, Tarragona), and challenge level (e.g., double degree or not).
-- Statistics dashboard: It shows some statistical data program regarding distribution, score averages, and field-by-field competitiveness of the 555 Catalonian degrees, excluding private universities.
+- **University Admission Calculator (out of 14)**: It converts Bachillerato and PAU grades into your official university admission score (out of 14). It can be your predicted or actual values.
+- **Personalized recommendations**: It suggests the top 20 degrees within reach based on your predicted admission score, where you can filter by **high school specialization**(Sciences and Technology, Arts and Humanities, Social Sciences) and/or **bachelor's study field** (e.g., Engineering and Architecture, Social Sciences and Law, Sciences, Arts and Humanities, etc.), **geographic preference** (e.g., Girona, Barcelona, Lleida, Tarragona), and **whether the student is interested in a double degree**.
+- **Statistics dashboard**: It shows some statistical data program regarding distribution, score averages, and field-by-field competitiveness of the 555 Catalonian degrees, excluding private universities.
 
 
 ## 📂 Project Structure
 You can access the exercise in the "Assigment3_CareerPath" folder and it contains:
 - app.py: The Flask API backend implementing all core endpoints and business logic.
 - templates/career_index.html: The html frontend to interact with the application.
-- degrees_data.json: The full database of university degrees and admission requirements. I personally cleaned the data and added more variables (see later the data cleaning process of the database)
+- degrees_data.json: The full database of university degrees and admission requirements. **I personally cleaned the data and added more variables for filtering (see at the end the data cleaning process of the database)**.
 - requirements.txt: The list of the required dependencies required to install and run the project.
 
 ## ⚙️ Setup
