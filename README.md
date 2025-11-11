@@ -1,7 +1,7 @@
 # Cloud-Computing-Flask-Assignment
 # 🌐 Exercise 1: Language Detection API
 
-This is a cloud-ready Flask web application for automatic language detection and text analytics.
+Exercise 1 consists of developing a Flask web application for automatic language detection and text analytics.
 
 ## 🚀 Features
 
@@ -331,7 +331,7 @@ After that, I added the Region column by executing a lookup to fill the region c
 ### 3. Adding the Field + High School Specialization columns
 To enable more advanced filtering and personalized recommendations, I enriched the dataset by adding two key columns: Field (field of the study of the bachelor's degree) and High School Specialization (the Bachillerato track that typically grants access to each degree).
 
-For the Field column, my goal was to assign every degree to a broader academic area—such as "Health Sciences," "Engineering and Architecture," or, for combined programs, "Double Degree" (so I could offer a filter specifically for dual programs). To automate this field column, I used an LLM in which I prompted it to extract relevant keywords from each degree title and map them to the correct academic area. For example, any degree containing "Enginyeria" was automatically mapped to "Engineering and Architecture." Wherever the LLM or pattern-based lookup didn't retrieev a clear result—such as less common or ambiguous degrees, I assigned the field manually to ensure accuracy.
+For the Field column, my goal was to assign every degree to a broader academic area—such as "Health Sciences," "Engineering and Architecture," or, for combined programs, "Double Degree" (so I could offer a filter specifically for dual programs). To automate this field column, I used an LLM in which I prompted it to extract relevant keywords from each degree title and map them to the correct academic area. For example, any degree containing "Enginyeria" was automatically mapped to "Engineering and Architecture." Wherever the LLM or pattern-based lookup didn't retrieve a clear result, such as less common or ambiguous degrees, I assigned the field manually to ensure accuracy.
 
 For the High School Specialization column, I followed a similar approach. I built a mapping table that links each field to its most common Bachillerato specialization. This allowed the platform to let students filter degrees by either their current specialization, their field of interest, or both. For example, a student from a Science and Technology background could still explore management or law degrees if those are accessible or relevant.
 
