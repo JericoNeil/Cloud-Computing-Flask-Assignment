@@ -1,9 +1,4 @@
-"""
-CareerPath API - Bachillerato to University Guide
-A Flask API to help Spanish high school students find university degrees based on their grades
-
-
-"""
+# After installing Flask and Flask CORS, we add import the libraries
 
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
@@ -11,17 +6,13 @@ import json
 from typing import List, Dict, Optional
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend access
+CORS(app)  # CORS for frontend access
 
-# Load degrees data
+# Load degrees data, this is the JSON file that I created from the data cleaning I carried out.
 with open('degrees_data.json', 'r', encoding='utf-8') as f:
     DEGREES_DATA = json.load(f)
 
-
-# ============================================================================
-# UTILITY FUNCTIONS
-# ============================================================================
-
+# This section contains functions dedicated to calculating the final university admission score for  high school students based on Bachillerato grades, PAU exam results, and subject-specific scores.
 def calculate_admission_score(bachillerato_grade: float, pau_exams: List[float], 
                               specific_subjects: List[float]) -> Dict:
     """
@@ -45,7 +36,7 @@ def calculate_admission_score(bachillerato_grade: float, pau_exams: List[float],
     # Admission phase score (max 10)
     admission_phase = bachillerato_component + pau_component
 
-    # Specific phase: best 2 subjects with 0.2 weight (max 4 points)
+    # Specific grades: best 2 subjects with 0.2 weight (max 4 points)
     specific_sorted = sorted(specific_subjects, reverse=True)[:2]
     specific_component = sum([grade * 0.2 for grade in specific_sorted])
 
@@ -115,9 +106,7 @@ def categorize_by_reach(student_score: float, degree_score: float) -> str:
         return "Reach"
 
 
-# ============================================================================
 # API ENDPOINTS
-# ============================================================================
 
 @app.route('/')
 def home():
@@ -356,9 +345,7 @@ def get_statistics():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# ============================================================================
-# RUN APPLICATION
-# ============================================================================
+# To run the app
 
 if __name__ == '__main__':
     print("=" * 60)
@@ -374,4 +361,4 @@ if __name__ == '__main__':
     print("\nStarting server on http://localhost:5002")
     print("=" * 60)
 
-    app.run(debug=True, host='0.0.0.0', port=5002)
+    app.run(host='0.0.0.0', port=5002)
