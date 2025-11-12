@@ -108,12 +108,13 @@ def categorize_by_reach(student_score: float, degree_score: float) -> str:
 
 # API ENDPOINTS
 
+# Endpoint 0: It serves as the frontend HTML page
 @app.route('/')
 def home():
-    """Serve the frontend HTML page"""
     return render_template('career_index.html')
 
 
+# Endpoint 1: It's the endpoint in which the student can calculate its university admission score by typing their Bachillerato grades (6 points) + PAU grades(4 points) + between 2-4 specific subjects (4 points)
 @app.route('/api/v1/students/calculate-score', methods=['POST'])
 def calculate_score():
     """
@@ -151,7 +152,7 @@ def calculate_score():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
+# Endpoint 2: Based on your previous score, it will recommend you the top 20 options of your preference depending on your filters (e.g., you can filter by your high school specialization and/or desired field of study, whether you want to study a double degree or not, and the province where you want to study your bachelor's, etc.)
 @app.route('/api/v1/students/recommendations', methods=['POST'])
 def get_recommendations():
     """
@@ -206,81 +207,11 @@ def get_recommendations():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
-@app.route('/api/v1/degrees/search', methods=['GET'])
-def search_degrees():
-    """
-    Endpoint 3: Search and filter degrees
-
-    Query parameters:
-    - field: Field of study
-    - min_score: Minimum cut-off score
-    - max_score: Maximum cut-off score
-    - university: University code
-    - location: Province
-    - specialization: High school specialization
-    - double_degree: true/false
-    """
-    try:
-        field = request.args.get('field')
-        min_score = float(request.args.get('min_score', 0))
-        max_score = float(request.args.get('max_score', 14))
-        university = request.args.get('university')
-        location = request.args.get('location')
-        specialization = request.args.get('specialization')
-        double_degree = request.args.get('double_degree', '').lower() == 'true'
-
-        # Filter
-        results = []
-        for degree in DEGREES_DATA:
-            # Apply filters
-            if degree['cut_off_score'] < min_score or degree['cut_off_score'] > max_score:
-                continue
-            if field and degree['field'] != field:
-                continue
-            if university and degree['university'] != university:
-                continue
-            if location and degree['province'] != location:
-                continue
-            if specialization and degree['specialization'] != specialization:
-                continue
-            if double_degree and not degree['is_double_degree']:
-                continue
-
-            results.append(degree)
-
-        # Sort by score
-        results.sort(key=lambda x: x['cut_off_score'], reverse=True)
-
-        return jsonify({
-            'count': len(results),
-            'results': results
-        }), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/v1/degrees/<code>', methods=['GET'])
-def get_degree_details(code):
-    """
-    Endpoint 4: Get details of a specific degree by code
-    """
-    try:
-        for degree in DEGREES_DATA:
-            if degree['code'] == code:
-                return jsonify(degree), 200
-
-        return jsonify({'error': 'Degree not found'}), 404
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
+# Endpoint 3: This is the endpoint in which you can have access to the statistics of the yearly cut-off scores to have a general picture should you want to have a look
 @app.route('/api/v1/statistics/overview', methods=['GET'])
 def get_statistics():
     """
-    Endpoint 5: Get statistical overview of the admission landscape
+    Endpoint 3: Get statistical overview of the admission landscape
     """
     try:
         # Calculate statistics
@@ -355,8 +286,6 @@ if __name__ == '__main__':
     print("\nAPI Endpoints:")
     print("  POST   /api/v1/students/calculate-score")
     print("  POST   /api/v1/students/recommendations")
-    print("  GET    /api/v1/degrees/search")
-    print("  GET    /api/v1/degrees/<code>")
     print("  GET    /api/v1/statistics/overview")
     print("\nStarting server on http://localhost:5002")
     print("=" * 60)
