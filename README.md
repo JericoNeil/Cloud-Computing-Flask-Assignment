@@ -11,7 +11,7 @@ Exercise 1 consists of developing a Flask web application for automatic language
 - **Instance info:** Verifies you are running in the cloud.
 
 ## Project Structure
-You can access the exercise in the "Assignment1_LanguageDetect" folder and it contains:
+You can access the exercise in the "Exercise1_LanguageDetect" folder and it contains:
 - language_api.py: the code for the API
 - templates/ --> index.html: the html file for the front-end and user experience
 
@@ -122,7 +122,7 @@ This first version of the project aims to provide a better user experience to hi
 
 
 ## Project Structure
-You can access the exercise in the "Assigment3_CareerPath" folder and it contains:
+You can access the exercise in the "Exercise3_CareerPath" folder and it contains:
 - app.py: The Flask API backend implementing all core endpoints and business logic.
 - templates/career_index.html: The html frontend to interact with the application.
 - degrees_data.json: The full database of university degrees and admission requirements. **I personally cleaned the data and added more variables for filtering (see at the end the data cleaning process of the database)**.
@@ -148,7 +148,7 @@ conda activate career_env
 pip install flask flask-cors
 
 ### ▶Run the app
-Now, you go to cd "Assignment3_CareerPath"
+Now, you go to cd "Exercise3_CareerPath"
 python app.py
 
 ### Open in your browser
