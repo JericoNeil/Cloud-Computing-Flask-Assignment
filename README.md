@@ -306,7 +306,7 @@ As a final step, I made sure all categorical values were consistent (for example
 
 With all columns complete and clean, I then exported the Excel table into a JSON file, so it's much convenient for direct use in the API and the HTML backend.
 
-## 👤 Author
+## Author
 *Jerico Agdan*  
 Cloud Computing Assignment 2
 2025-2026
