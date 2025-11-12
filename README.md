@@ -1,23 +1,23 @@
 # Cloud-Computing-Flask-Assignment
-# 🌐 Exercise/Assignment 1: Language Detection API
+# Exercise/Assignment 1: Language Detection API
 
 Exercise 1 consists of developing a Flask web application for automatic language detection and text analytics.
 
-## 🚀 Features
+## Features
 
 - **Multi-language detection:** Returns all identified languages in any text, with proportional confidence scores.
 - **Text statistics:** Shows character count, word count, and number of detected languages.
 - **Browser frontend:** Interactive form for easy API testing.
 - **Instance info:** Verifies you are running in the cloud.
 
-## 📂 Project Structure
+## Project Structure
 You can access the exercise in the "Assignment1_LanguageDetect" folder and it contains:
 - language_api.py: the code for the API
 - templates/ --> index.html: the html file for the front-end and user experience
 
-## ⚙️ Setup
+## Setup
 
-### 🐍 Environment
+### Environment
 
 If you use **micromamba** or **conda**:
 
@@ -31,19 +31,19 @@ conda create -n langdetect_env python=3.11
 
 conda activate langdetect_env
 
-### 📦 Install required packages
+### Install required packages
 pip install flask langdetect
 
-### ▶️ Run the app
-First, you go to cd "Assignment1_LanguageDetect"
-python language_api.py
+### Run the app
+- First, go to the project folder: cd "Exercise1_LanguageDetect"
 
+- Then run the application: python language_api.py
 
-### 🌍 Open in your browser
+- After starting the app: Open your browser and go to http://localhost:5001 or http://127.0.0.1:5001 to use the Language Detection API.
 
-Go to [http://172.21.8.147:5001]
+If you want to access the app from another device on your local network, use your computer’s local IP address (e.g., http://192.168.1.x:5001), replacing x with your computer’s actual IP.
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### `/detect-all-probabilities` (POST)
 *Detects all languages and their probabilities.*
@@ -82,7 +82,7 @@ Go to [http://172.21.8.147:5001]
 **Response:**
 { "instance": "mock-instance-id" }
 
-## 💻 Example Usage
+## Example Usage
 
 1. **Detect Languages:**  
    Type *Hello, my name is María. Tengo 24 años.*  
@@ -104,10 +104,10 @@ Language breakdown:
 - English (en): 55.0%
 - Spanish (es): 45.0%
 
-# 🌐 Exercise/Assignment 2: Making the API available in AWS
+# Exercise 2: Making the API available in AWS
 Information about this exercise is explained in the PDF document
 
-# 🎓 Exercise/Assignment 3: Bachillerato University Degree Recommendation System
+# Exercise 3: Bachillerato University Degree Recommendation System
 
 The motivation behind this project is to help my brother choose which university degree to pursue. He's currently in his first year of high school but he has no idea about what he wants to study like a great majority of students. Notwithstanding the importance of choosing a degree, there's no existing platform that tells you what career paths you could pursue based on your high school + PAU predicted grades. 
 
@@ -115,22 +115,22 @@ In Catalonia, you can find this website from the Government of Catalonia about t
 
 This first version of the project aims to provide a better user experience to high school students, empowering students like my brother to make informed and personalized decisions about their academic futures.
 
-## 🚀 Features
+## Features
 - **University Admission Calculator (out of 14)**: It converts Bachillerato and PAU grades into your official university admission score (out of 14). It can be your predicted or actual values.
 - **Personalized recommendations**: It suggests the top 20 degrees within reach based on your predicted admission score, where you can filter by **high school specialization**(Sciences and Technology, Arts and Humanities, Social Sciences) and/or **bachelor's study field** (e.g., Engineering and Architecture, Social Sciences and Law, Sciences, Arts and Humanities, etc.), **geographic preference** (e.g., Girona, Barcelona, Lleida, Tarragona), and **whether the student is interested in a double degree**.
 - **Statistics dashboard**: It shows some statistical data program regarding distribution, score averages, and field-by-field competitiveness of the 555 Catalonian degrees, excluding private universities.
 
 
-## 📂 Project Structure
+## Project Structure
 You can access the exercise in the "Assigment3_CareerPath" folder and it contains:
 - app.py: The Flask API backend implementing all core endpoints and business logic.
 - templates/career_index.html: The html frontend to interact with the application.
 - degrees_data.json: The full database of university degrees and admission requirements. **I personally cleaned the data and added more variables for filtering (see at the end the data cleaning process of the database)**.
 - requirements.txt: The list of the required dependencies required to install and run the project.
 
-## ⚙️ Setup
+## Setup
 
-### 🐍 Environment
+### Environment
 
 If you use **micromamba** or **conda**:
 
@@ -144,18 +144,18 @@ conda create -n career_env python=3.11
 
 conda activate career_env
 
-### 📦 Install required packages
+### Install required packages
 pip install flask flask-cors
 
-### ▶️ Run the app
+### ▶Run the app
 Now, you go to cd "Assignment3_CareerPath"
 python app.py
 
-### 🌍 Open in your browser
+### Open in your browser
 
 Go to [http://172.21.8.147:5002]
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### 1st endpoint: `/api/v1/students/calculate-score` (POST)
 *Calculate your Spanish university admission score (out of 14) from Bachillerato, general PAU exams, and two specific subject marks.*
@@ -210,41 +210,7 @@ Go to [http://172.21.8.147:5002]
   "student_score": 11.85
 }
 
-### 3rd endpoint: `/api/v1/degrees/search` (GET)
-*You can filter degrees by field, score range, university, location, specialization, and double degree status without the need of including your predicted university admission score*
-
-**Request:**
-/api/v1/degrees/search?field=Health%20Sciences&min_score=10
-
-**Response:**
-{
-  "count": 3,
-  "results": [
-    {
-      "code": "31012",
-      "name": "Enginyeria Informàtica (Barcelona)",
-      "university": "UPC",
-      "field": "Engineering and Architecture"
-    }
-  ]
-}
-
-### 4th endpoint: `/api/v1/degrees/<code>` (GET)
-*Retrieves full details for a specific degree using its code*
-
-**Request:**
-/api/v1/degrees/11043
-
-**Response:**
-{
-  "code": "11043",
-  "name": "Medicina (Campus Clínic) (Barcelona)",
-  "university": "UB",
-  "location": "Barcelona",
-  "field": "Health Sciences"
-}
-
-### 5th endpoint: `/api/v1/statistics/overview` (GET)
+### 3rd endpoint: `/api/v1/statistics/overview` (GET)
 *Presents statistical summaries about score distribution, fields, specializations, and universities*
 
 
