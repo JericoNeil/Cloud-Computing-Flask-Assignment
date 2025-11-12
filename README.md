@@ -1,5 +1,5 @@
 # Cloud-Computing-Flask-Assignment
-# Exercise/Assignment 1: Language Detection API
+# Exercise 1: Language Detection API
 
 Exercise 1 consists of developing a Flask web application for automatic language detection and text analytics.
 
@@ -267,7 +267,7 @@ api/v1/statistics/overview
   "total_programs": 555
 }
 
-## 🚀 Data Cleaning of the Database
+## Data Cleaning of the Database
 I used the Database from the Generalitat of Catalonia website, which is the official website to retrieve the "cut-off grades" or Notes de Tall in Catalan, of each degree of Catalonian universities (excluding private university bachelor's). I did not have the Excel File, so I converted the PDF file to Excel and followed a multi-step data cleaning process using Excel.
 
 Moreover, I also enriched the dataset by adding several new columns to support feature filtering and analysis in the application:
