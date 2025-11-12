@@ -142,6 +142,7 @@ You can access the exercise in the "Exercise3_CareerPath" folder and it contains
 - templates/career_index.html: The html frontend to interact with the application.
 - degrees_data.json: The full database of university degrees and admission requirements. **I personally cleaned the data and added more variables for filtering (see at the end the data cleaning process of the database)**.
 - requirements.txt: The list of the required dependencies required to install and run the project.
+- raw_database folder: This includes the database of PAU scores in PDF and Excel
 
 ## Setup
 
