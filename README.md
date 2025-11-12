@@ -164,14 +164,25 @@ conda activate career_env
 pip install flask flask-cors
 
 ### ▶Run the app
-Now, you go to cd "Exercise3_CareerPath"
-python app.py
+- First, go to the project folder: cd "Exercise3_CareerPath"
 
-### Open in your browser
+- Then run the application: python api.py
 
-Go to [http://172.21.8.147:5002]
+- After starting the app: Open your browser and go to http://localhost:5002 or http://127.0.0.1:5002 to use the Language Detection API.
+
+If you want to access the app from another device on your local network, use your computer’s local IP address (e.g., http://192.168.1.x:5002), replacing x with your computer’s actual IP.
 
 ## API Endpoints
+I implemented 3 endpoints that allows: 
+
+Calculate Admission Score
+Calculates a student’s university admission score based on their Bachillerato and PAU grades.
+
+Degree Recommendations
+Returns a ranked list of the top 20 bachelor’s degree programs tailored to the student’s academic profile and interests.
+
+General Statistics
+Provides summary statistics about cut-off scores for university programs in Catalonia, giving insights into average scores, competitiveness, and program distribution.
 
 ### 1st endpoint: `/api/v1/students/calculate-score` (POST)
 *Calculate your Spanish university admission score (out of 14) from Bachillerato, general PAU exams, and two specific subject marks.*
