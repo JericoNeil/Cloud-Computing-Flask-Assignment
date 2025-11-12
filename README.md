@@ -175,14 +175,11 @@ If you want to access the app from another device on your local network, use you
 ## API Endpoints
 I implemented 3 endpoints that allows: 
 
-Calculate Admission Score
-Calculates a student’s university admission score based on their Bachillerato and PAU grades.
+- **Calculate Admission Score**: Calculates a student’s university admission score based on their Bachillerato and PAU grades.
 
-Degree Recommendations
-Returns a ranked list of the top 20 bachelor’s degree programs tailored to the student’s academic profile and interests.
+- **Degree Recommendations**: Returns a ranked list of the top 20 bachelor’s degree programs tailored to the student’s academic profile and interests.
 
-General Statistics
-Provides summary statistics about cut-off scores for university programs in Catalonia, giving insights into average scores, competitiveness, and program distribution.
+- **General Statistics**: Provides summary statistics about cut-off scores for university programs in Catalonia, giving insights into average scores, competitiveness, and program distribution.
 
 ### 1st endpoint: `/api/v1/students/calculate-score` (POST)
 *Calculate your Spanish university admission score (out of 14) from Bachillerato, general PAU exams, and two specific subject marks.*
