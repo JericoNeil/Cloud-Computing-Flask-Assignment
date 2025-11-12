@@ -105,7 +105,22 @@ Language breakdown:
 - Spanish (es): 45.0%
 
 # Exercise 2: Making the API available in AWS
-Information about this exercise is explained in the PDF document
+This exercise demonstrates that the Flask Language Detection API has been successfully deployed to an AWS EC2 instance and is accessible remotely. Information about this exercise is explained and requested screenshots are in the PDF document. In summary, exercise 2 consists of the following:
+
+## 1) Screenshot of the Running Instance
+Include a screenshot from the AWS Management Console showing:
+- The list of EC2 instances, with the instance clearly in the “Running” state.
+- The public IP address of the EC2 instance, which is necessary to access the API from outside the network.
+- My username displayed at the top right of the AWS console for verification.
+
+## 2) Screenshot of the /instance Endpoint
+- This second point includes a screenshot demonstrating a successful API request to the /instance endpoint of the cloud-hosted Flask app:
+- The screenshot shows the cloud instance
+- The response must confirm that the API is responding on the deployed instance.
+
+## 3) Extra: Screenshot of the Text Statistics Endpoint
+- As an extra for completeness, this point includes a screenshot of a request to the /text-stats endpoint:
+- The response should display the number of characters, words, and detected languages, along with a proportional breakdown by language.
 
 # Exercise 3: Bachillerato University Degree Recommendation System
 
